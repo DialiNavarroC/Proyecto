@@ -12,5 +12,7 @@ package proyectoavanzada;
 public class Entidad {
     public String nombre;
     
+    //cambio
+    
    
 }
