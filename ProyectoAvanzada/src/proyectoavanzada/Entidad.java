@@ -17,6 +17,7 @@ import proyectoavanzada.Poligonos.Rectangulo;
 public class Entidad {
     public Text nombre;
     public Rectangulo rectangulo;
+    public ArrayList <Atributo> atributos = new ArrayList();
     public ArrayList<Line> lineas=new ArrayList();
     public ArrayList<Relacion> relaciones=new ArrayList();
 

@@ -107,11 +107,35 @@ import javafx.scene.shape.StrokeLineCap;
         punto4=new Point((int) ((punto.x)+largo),punto.y+40);
         puntos.add(punto4);
 
-        this.lineaSuperior= new Line(punto.x,punto.y,punto.x+largo,punto.y);
-        this.lineaInferior= new Line(punto.x,punto.y+40,punto.x+largo,punto.y+40);
-        this.lineaIzquierda= new Line(punto.x,punto.y,punto.x,punto.y+40);
-        this.lineaDerecha= new Line(punto.x+largo,punto.y,punto.x+largo,punto.y+40);
+        this.lineaSuperior= new Line(punto.x,punto.y,punto2.x,punto2.y);
+        this.lineaInferior= new Line(punto3.x,punto3.y,punto4.x,punto4.y);
+        this.lineaIzquierda= new Line(punto.x,punto.y,punto3.x,punto3.y);
+        this.lineaDerecha= new Line(punto2.x,punto.y,punto4.x,punto4.y);
         
+        Dibujar();
+    }
+    public void MoverRecantulo2(Point punto) {
+        Borrar();
+        this.punto = punto;
+        
+        puntos.clear();
+
+        punto= new Point((punto.x)-303,punto.y-28);
+        puntos.add(punto);
+
+        punto2= new Point((int) ((punto.x)+largo),punto.y);
+        puntos.add(punto2);
+
+        punto3= new Point((int) ((punto.x)),punto.y+46);
+        puntos.add(punto3);
+
+        punto4=new Point((int) ((punto.x)+largo),punto.y+46);
+        puntos.add(punto4);
+
+        this.lineaSuperior= new Line(punto.x,punto.y,punto2.x,punto2.y);
+        this.lineaInferior= new Line(punto3.x,punto3.y,punto4.x,punto4.y);
+        this.lineaIzquierda= new Line(punto.x,punto.y,punto3.x,punto3.y);
+        this.lineaDerecha= new Line(punto2.x,punto.y,punto4.x,punto4.y);
         Dibujar();
     }
 

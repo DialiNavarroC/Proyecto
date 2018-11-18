@@ -20,6 +20,7 @@ import javafx.scene.shape.StrokeLineCap;
  * @author Diali
  */
 public class Poligono {
+    public Point punto;
     public ArrayList<Point> puntos=new ArrayList();
     public ArrayList<Point> puntosAux=new ArrayList();
     public ArrayList<Line> lineas=new ArrayList();
@@ -61,6 +62,7 @@ public class Poligono {
     }
 
     public void generarPuntos(int n, int radio, Point puntoMouse){
+        this.punto=puntoMouse;
         for (int i = 0; i <= n; i++) {
             Point punto=new Point();
             Double angle = i * 2 * 3.14 / n;
@@ -70,7 +72,9 @@ public class Poligono {
             puntosBolean.add(Boolean.FALSE);
         }
     }
+    
     public void generarPuntosElipse(int n, int radio, Point puntoMouse){
+        this.punto=puntoMouse;
         for (int i = 0; i <= n; i++) {
             Point punto=new Point();
             Double angle = i * 2 * 3.14 / n;
@@ -114,6 +118,32 @@ public class Poligono {
             
         }
     }
+    public void DibujarElipseNormalDoble(int n, int largo, Point puntoMouse) {
+        this.n=n;
+        this.largo=largo;
+        generarPuntosElipseDoble(n, largo,puntoMouse);
+        generarLineas();
+        System.out.println("KAAAAA");
+        for (int i = 0; i < this.lineas.size(); i++) {
+            
+            lineas.get(i).setStroke(Color.BLACK);
+            lineas.get(i).setStrokeWidth(1);
+            lineas.get(i).setStrokeLineCap(StrokeLineCap.ROUND);
+            pane.getChildren().add(lineas.get(i));
+            
+        }
+    }
+    
+    public void generarPuntosElipseDoble(int n, int radio, Point puntoMouse){
+        for (int i = 0; i <= n; i++) {
+            Point punto=new Point();
+            Double angle = i * 2 * 3.14 / n;
+            punto.x = (int) (((radio+85) * cos(angle))+ puntoMouse.x)-300;
+            punto.y= (int) (((radio+4) * sin(angle))+puntoMouse.y)-15;
+            puntos.add(punto);
+            puntosBolean.add(Boolean.FALSE);
+        }
+    }
     
     public void generarLineas(){
         int i;
@@ -123,19 +153,42 @@ public class Poligono {
         }
     }
     public boolean seleccionar(Point punto){
-        int j=0;
         boolean seleccion=false;
-        /*if (poligono[i][1] < y and poligono[j][1] >= y) or (poligono[j][1] < y and poligono[i][1] >= y):
-            if poligono[i][0] + (y - poligono[i][1]) / (poligono[j][1] - poligono[i][1]) * (poligono[j][0] - poligono[i][0]) < x:*/
-        for (int i = 0; i < puntos.size(); i++) {
-            if ((puntos.get(i).y < punto.y && puntos.get(j).y >= punto.y) ||(puntos.get(j).y < punto.y && puntos.get(i).y >= punto.y)){
-                    if(puntos.get(i).x + (punto.y - puntos.get(i).y) / (puntos.get(j).y - puntos.get(i).y) * (puntos.get(j).x - puntos.get(i).x) < punto.x) {
-                        seleccion=true;
-                    }  
-            }
-            j = i;        
-        }             
-            return seleccion;
+        //System.out.println("punto: "+punto.toString());
+        Point puntoMaxX=puntos.get(0);
+        Point puntoMaxY=puntos.get(0);
+        Point puntoMinX=puntos.get(0);
+        Point puntoMinY=puntos.get(0);
+        for (int i = 0; i < puntos.size(); i++) {//definimos el punto maximo en x   
+                 if(puntos.get(i).x>puntoMaxX.x){
+                     puntoMaxX=puntos.get(i);
+                 }
+        }  
+        for (int i = 0; i < puntos.size(); i++) {//definimos el punto maximo en Y
+                 if(puntos.get(i).y> puntoMaxY.y){
+                     puntoMaxY=puntos.get(i);
+                 }
+        }     
+        for (int i = 0; i < puntos.size(); i++) {//definimos el punto min en x
+                 
+                 if(puntos.get(i).x<puntoMinX.x){
+                     puntoMinX=puntos.get(i);
+                 }
+        }     
+        for (int i = 0; i < puntos.size(); i++) {//definimos el punto min en y
+                 
+                 if(puntos.get(i).y<puntoMinY.y){
+                     puntoMinY=puntos.get(i);
+                 }
+        }
+        if(punto.x<puntoMaxX.x&&
+            punto.x>puntoMinX.x&&
+            punto.y<puntoMaxY.y&&
+           punto.y >puntoMinY.y){
+            return true;
+        }
+        
+        return false;
     }
     public void borrar(){
         for (int i = 0; i < lineas.size(); i++) {
